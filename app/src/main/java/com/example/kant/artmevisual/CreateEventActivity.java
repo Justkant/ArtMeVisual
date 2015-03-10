@@ -339,41 +339,4 @@ public class CreateEventActivity extends BaseActivity implements AdapterView.OnI
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
-    public static class TimePickerFragment extends DialogFragment {
-
-        private TimePickerDialog.OnTimeSetListener timeSetListener;
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-            return new TimePickerDialog(getActivity(), timeSetListener, hour, minute, true);
-        }
-
-        public void setTimeSetListener(TimePickerDialog.OnTimeSetListener timeSetListener) {
-            this.timeSetListener = timeSetListener;
-        }
-    }
-
-    public static class DatePickerFragment extends DialogFragment {
-
-        private DatePickerDialog.OnDateSetListener dateSetListener;
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            return new DatePickerDialog(getActivity(), dateSetListener, year, month, day);
-        }
-
-        public void setDateSetListener(DatePickerDialog.OnDateSetListener dateSetListener) {
-            this.dateSetListener = dateSetListener;
-        }
-    }
 }

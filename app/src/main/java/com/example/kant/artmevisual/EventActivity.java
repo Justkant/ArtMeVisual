@@ -46,6 +46,7 @@ public class EventActivity extends BaseActivity {
 
     private LinearLayout mEventUsers;
     private LinearLayout mEventPhotos;
+    private int EVENT_EDIT_CODE = 10;
 
 
     @Override
@@ -68,12 +69,13 @@ public class EventActivity extends BaseActivity {
         mToolbar = getActionBarToolbar();
 
         mFab = (FloatingActionButton) findViewById(R.id.edit_btn);
+        mFab.setVisibility(View.GONE);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, EditEventActivity.class);
                 intent.putExtra("event_id", event_id);
-                startActivity(intent);
+                startActivityForResult(intent, EVENT_EDIT_CODE);
             }
         });
 
@@ -88,14 +90,17 @@ public class EventActivity extends BaseActivity {
                 .setEndpoint(getString(R.string.base_url))
                 .build();
         mApi = restAdapter.create(ArtmeAPI.class);
+        updateInfosEvent();
+    }
 
+    public void updateInfosEvent() {
         mApi.getEventById(event_id,
                 MySharedPreferences.readToPreferences(this, getString(R.string.token_string), ""),
                 new Callback<Event>() {
                     @Override
                     public void success(Event event, Response response) {
-                        if (!event.can_edit)
-                            mFab.setVisibility(View.GONE);
+                        if (event.can_edit)
+                            mFab.setVisibility(View.VISIBLE);
                         Picasso.with(mContext)
                                 .load(getString(R.string.base_url) + "/" + event.picture_url)
                                 .centerCrop()
@@ -114,6 +119,15 @@ public class EventActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EVENT_EDIT_CODE) {
+            if (resultCode == RESULT_OK) {
+                updateInfosEvent();
+            }
+        }
     }
 
     private void insertPhotos(List<String> photos) {

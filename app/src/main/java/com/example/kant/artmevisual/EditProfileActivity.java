@@ -125,7 +125,7 @@ public class EditProfileActivity extends BaseActivity implements View.OnClickLis
         if (!mEditLastname.getText().toString().isEmpty()) {
             user.last_name = mEditLastname.getText().toString();
         }
-        if (!picture_url.isEmpty()) {
+        if (picture_url != null) {
             user.picture_url = picture_url;
         }
         mCacheManager.putAsync("me", user, new PutCallback() {

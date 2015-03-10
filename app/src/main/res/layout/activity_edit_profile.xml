@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kant.artmevisual.EditProfileActivity"
-    android:id="@+id/main_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.kant.artmevisual.EditProfileActivity">
 
     <include layout="@layout/toolbar_actionbar" />
 
@@ -17,6 +17,10 @@
             android:id="@+id/editRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/element_spacing_normal"
+            android:layout_marginLeft="@dimen/content_padding_normal"
+            android:layout_marginRight="@dimen/content_padding_normal"
+            android:layout_marginTop="@dimen/element_spacing_normal"
             tools:context="com.example.kant.artmevisual.EditProfileActivity">
 
             <ImageView
