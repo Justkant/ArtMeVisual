@@ -52,6 +52,7 @@ import retrofit.client.Response;
 public abstract class BaseActivity extends ActionBarActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final int REQUEST_CODE = 100;
+    private static final int UPDATE_INFOS_USER_CODE = 200;
 
     private CacheManager mCacheManager;
 
@@ -270,7 +271,7 @@ public abstract class BaseActivity extends ActionBarActivity implements SwipeRef
 
     private void startProfileActivity() {
         Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, UPDATE_INFOS_USER_CODE);
         mDrawerLayout.closeDrawer(Gravity.START);
     }
 
@@ -463,10 +464,11 @@ public abstract class BaseActivity extends ActionBarActivity implements SwipeRef
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                getUserInfo();
-            }
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            getUserInfo();
+        }
+        if (requestCode == UPDATE_INFOS_USER_CODE && resultCode == RESULT_OK) {
+            setupNavDrawerInfo();
         }
     }
 

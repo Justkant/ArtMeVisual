@@ -10,6 +10,7 @@ import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Part;
 import retrofit.http.Path;
 import retrofit.mime.TypedFile;
@@ -30,6 +31,9 @@ public interface ArtmeAPI {
 
     @POST(Constants.USERS)
     void postUser(@Body User log, Callback<String> cb);
+
+    @PUT("/users/{id}")
+    void putUser(@Header("TOKEN") String token, @Path("id") int id, @Body User log, Callback<User> cb);
 
     @GET("/users/{id}")
     void getUserById(@Path("id") int id, Callback<User> cb);

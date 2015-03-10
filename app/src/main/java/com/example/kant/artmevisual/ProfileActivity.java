@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class ProfileActivity extends BaseActivity {
 
+    private static final int PROFIL_EDIT_CODE = 10;
     private Context mContext;
     private LayoutInflater mInflater;
     private CacheManager mCacheManager;
@@ -61,7 +63,7 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, EditProfileActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, PROFIL_EDIT_CODE);
             }
         });
 
@@ -75,6 +77,20 @@ public class ProfileActivity extends BaseActivity {
         mUserSubEvents = (LinearLayout) findViewById(R.id.user_sub_events);
         mUserPhotos = (LinearLayout) findViewById(R.id.user_photos);
 
+        updateInfosUser();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PROFIL_EDIT_CODE) {
+            if (resultCode == RESULT_OK) {
+                updateInfosUser();
+                setResult(RESULT_OK);
+            }
+        }
+    }
+
+    private void updateInfosUser() {
         Type userType = new TypeToken<User>() {
         }.getType();
         mCacheManager.getAsync("me", User.class, userType, new GetCallback() {
@@ -104,7 +120,6 @@ public class ProfileActivity extends BaseActivity {
                 //TODO: implement error handler
             }
         });
-
     }
 
     private void insertPhotos(List<String> photos) {
