@@ -69,6 +69,14 @@ public class GroupActivity extends BaseActivity {
         mToolbar = getActionBarToolbar();
 
         mFab = (FloatingActionButton) findViewById(R.id.edit_btn);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, EditGroupActivity.class);
+                intent.putExtra("group_id", group_id);
+                startActivity(intent);
+            }
+        });
 
         mGroupImg = (ImageView) findViewById(R.id.group_img);
         mPlace = (TextView) findViewById(R.id.group_address);

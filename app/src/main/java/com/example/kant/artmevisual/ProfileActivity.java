@@ -57,6 +57,13 @@ public class ProfileActivity extends BaseActivity {
         mToolbar = getActionBarToolbar();
 
         mFab = (FloatingActionButton) findViewById(R.id.edit_btn);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mProfileImg = (ImageView) findViewById(R.id.profile_img);
         mName = (TextView) findViewById(R.id.user_completename);
@@ -74,7 +81,7 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onSuccess(Object o) {
                 if (o != null) {
-                    User user = (User) o;
+                    final User user = (User) o;
                     Picasso.with(mContext)
                             .load(getString(R.string.base_url) + "/" + user.picture_url)
                             .centerCrop()

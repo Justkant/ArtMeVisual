@@ -68,6 +68,14 @@ public class EventActivity extends BaseActivity {
         mToolbar = getActionBarToolbar();
 
         mFab = (FloatingActionButton) findViewById(R.id.edit_btn);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, EditEventActivity.class);
+                intent.putExtra("event_id", event_id);
+                startActivity(intent);
+            }
+        });
 
         mEventImg = (ImageView) findViewById(R.id.event_img);
         mPlace = (TextView) findViewById(R.id.event_address);
