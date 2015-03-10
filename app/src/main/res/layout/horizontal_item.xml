@@ -1,0 +1,26 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="2dp">
+
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/grid_image_desc" />
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_title_height"
+        android:layout_gravity="bottom"
+        android:padding="@dimen/content_padding_normal"
+        android:textColor="@android:color/white"
+        android:background="@color/item_text_back"
+        android:textSize="16sp"
+        android:gravity="bottom" />
+
+</FrameLayout>

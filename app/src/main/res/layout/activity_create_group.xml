@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.kant.artmevisual.CreateGroupActivity">
+
+    <include layout="@layout/toolbar_actionbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/element_spacing_normal"
+            android:layout_marginLeft="@dimen/content_padding_normal"
+            android:layout_marginRight="@dimen/content_padding_normal"
+            android:layout_marginTop="@dimen/element_spacing_normal"
+            android:orientation="vertical">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/create_group_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/create_group_name"
+                android:textSize="34sp"
+                app:floatingLabel="highlight"
+                app:maxCharacters="50"
+                app:singleLineEllipsis="true" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/create_group_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/create_group_desc"
+                android:inputType="textMultiLine"
+                android:textSize="16sp"
+                app:floatingLabel="highlight"
+                app:maxCharacters="150" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/create_group_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/create_group_place"
+                android:textSize="16sp"
+                app:floatingLabel="highlight"
+                app:singleLineEllipsis="true" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

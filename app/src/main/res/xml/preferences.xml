@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="deco_button"
+        android:summary="@string/pref_logout_summary_string"
+        android:title="@string/pref_logout_string" />
+    <Preference
+        android:key="delete_button"
+        android:summary="@string/pref_delete_summary_string"
+        android:title="@string/pref_delete_string" />
+</PreferenceScreen>

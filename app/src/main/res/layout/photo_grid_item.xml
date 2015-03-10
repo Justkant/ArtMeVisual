@@ -1,0 +1,8 @@
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_image"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:contentDescription="@string/grid_image_desc"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="2dp"
+    android:scaleType="centerCrop" />

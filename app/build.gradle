@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven {
+        url 'https://raw.github.com/iainconnor/ObjectCache/master/maven/'
+    }
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.example.kant.artmevisual"
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    /* squareup libs */
+    compile 'com.squareup.okhttp:okhttp:2.2.0'
+    compile 'com.squareup.picasso:picasso:2.5.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+
+    /* ViewHelper for transitions */
+    compile 'com.nineoldandroids:library:2.4.0'
+
+    /* ScrollView Observable lib */
+    compile 'com.github.ksoichiro:android-observablescrollview:1.5.0'
+
+    /* Object Caching */
+    compile 'com.iainconnor:objectcache:0.0.18-SNAPSHOT'
+
+    /* Material Design UI libs */
+    compile 'com.nispok:snackbar:2.9.1'
+    compile 'com.makeramen:roundedimageview:1.5.0'
+    compile 'com.getbase:floatingactionbutton:1.8.0'
+    compile 'com.afollestad:material-dialogs:0.6.3.1'
+    compile 'com.rengwuxian.materialedittext:library:1.8.2'
+
+    /* Android Support libs */
+    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:appcompat-v7:21.0.3'
+}

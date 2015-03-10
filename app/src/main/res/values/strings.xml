@@ -1,0 +1,67 @@
+<resources>
+    <string name="base_url">http://192.168.0.109/artme-api</string>
+    <string name="app_name">ArtMeVisual</string>
+    <string name="title_activity_explore">ArtMe</string>
+    <string name="grid_image_desc">Grid Image</string>
+    <string name="navdrawer_item_explore">Explorer</string>
+    <string name="navdrawer_item_search">Chercher</string>
+    <string name="navdrawer_item_create_group">Créer un groupe</string>
+    <string name="navdrawer_item_settings">Paramètres</string>
+    <string name="grid_item_color">Grid item color</string>
+    <string name="navdrawer_profile_image_desc">profile image</string>
+    <string name="title_activity_create_event">CreateEventActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="create_event_name">Titre de l\'évènement</string>
+    <string name="action_validate">check</string>
+    <string name="create_event_start">Début</string>
+    <string name="create_event_end">Fin</string>
+    <string name="create_event_place">Lieu</string>
+    <string name="create_event_desc">Description</string>
+    <string name="pref_logout_string">Déconnexion</string>
+    <string name="pref_logout_summary_string">Déconnexion de l\'utilisateur actuel</string>
+    <string name="title_activity_create_group">CreateGroupActivity</string>
+    <string name="create_group_name">Nom du groupe</string>
+    <string name="create_group_desc">Description</string>
+    <string name="create_group_place">Adresse</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="action_search">Search</string>
+    <string name="navdrawer_item_my_events">Mes évènements</string>
+    <string name="title_activity_my_events">MyEventsActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="login_button">Connexion</string>
+    <string name="create_button">Créer un compte</string>
+    <string name="password_text">Mot de passe</string>
+    <string name="login_text">Nom d\'utilisateur</string>
+    <string name="token_string">token</string>
+    <string name="create_username_text">Nom d\'utilisateur *</string>
+    <string name="create_firstname_text">Prénom</string>
+    <string name="create_lastname_text">Nom</string>
+    <string name="createaccount_button">Créer le compte</string>
+    <string name="backlogin_button">J\'ai déjà un compte</string>
+    <string name="create_password_text">Mot de passe *</string>
+    <string name="login_error">Mauvais nom d\'utilisateur ou mot de passe</string>
+    <string name="create_error">Nom d\'utilisateur ou email déjà existant</string>
+    <string name="create_email_text">Adresse e-mail *</string>
+    <string name="pref_delete_summary_string">Supprime le compte utilisateur</string>
+    <string name="pref_delete_string">Supprimer mon compte</string>
+    <string name="title_activity_group">GroupActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="profile_image_desc">Image de profile</string>
+    <string name="profile_account_icon">account_icon</string>
+    <string name="user_profile_email">Email</string>
+    <string name="create_event_choose_account_string">Poster en tant que :</string>
+    <string name="title_activity_event">EventActivity</string>
+    <string name="group_image_desc">Image de groupe</string>
+    <string name="group_address_icon">group address icon</string>
+    <string name="group_place_text">Adresse</string>
+    <string name="group_desc_desc">group desc icon</string>
+    <string name="event_image_desc">image de l\'event</string>
+    <string name="title_activity_user">UserActivity</string>
+    <string name="title_activity_browse_photos">Photos</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_photo">Ajouter une photo</string>
+</resources>

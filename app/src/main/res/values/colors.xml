@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#009688</color>
+    <color name="primary_dark">#00796B</color>
+    <color name="primary_light">#B2DFDB</color>
+    <color name="accent">#FF9800</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
+
+    <color name="item_background">#96ff9800</color>
+    <color name="item_background2">#9600796b</color>
+    <color name="item_background3">#96001d79</color>
+    <color name="item_background4">#96787900</color>
+
+    <color name="navdrawer_text_color">@color/primary_text</color>
+    <color name="navdrawer_text_color_selected">@color/primary</color>
+    <color name="navdrawer_icon_tint">#888</color>
+    <color name="navdrawer_icon_tint_selected">@color/primary</color>
+    <color name="item_text_back">#50000000</color>
+</resources>
