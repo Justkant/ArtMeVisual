@@ -115,7 +115,6 @@ public class GroupActivity extends BaseActivity {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Log.i("Event Activity", "Failed to get group data");
                     }
                 });
     }

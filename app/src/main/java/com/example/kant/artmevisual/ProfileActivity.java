@@ -81,7 +81,7 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onSuccess(Object o) {
                 if (o != null) {
-                    final User user = (User) o;
+                    User user = (User) o;
                     Picasso.with(mContext)
                             .load(getString(R.string.base_url) + "/" + user.picture_url)
                             .centerCrop()
