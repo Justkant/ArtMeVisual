@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -46,7 +46,6 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
@@ -218,9 +217,11 @@ public class BrowsePhotosActivity extends BaseActivity implements ObservableScro
         }
 
         if (id == R.id.add_photo) {
-            Intent i = new Intent(
-                    Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(i, SELECT_IMAGE);
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            startActivityForResult(Intent.createChooser(intent, "Sélectionnez une image"), SELECT_IMAGE);
             return true;
         }
 
@@ -231,24 +232,21 @@ public class BrowsePhotosActivity extends BaseActivity implements ObservableScro
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_IMAGE && resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            final Uri uri = data.getData();
 
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
+            // Get the File path from the Uri
+            String path = FileUtils.getPath(this, uri);
 
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            File file = new File(picturePath);
-            Page page = pages.get(mPager.getCurrentItem());
-            postPhoto(page, new TypedFile(getMimeType(picturePath), file));
+            // Alternatively, use FileUtils.getFile(Context, Uri)
+            if (path != null && FileUtils.isLocal(path)) {
+                File file = new File(path);
+                postPhoto(mPager.getCurrentItem(), new TypedFile(getMimeType(path), file));
+            }
         }
     }
 
     private String getMimeType(String url) {
-        String type = "";
+        String type = null;
         String extension = MimeTypeMap.getFileExtensionFromUrl(url);
         if (extension != null) {
             MimeTypeMap mime = MimeTypeMap.getSingleton();
@@ -257,11 +255,11 @@ public class BrowsePhotosActivity extends BaseActivity implements ObservableScro
         return type;
     }
 
-    private void postPhoto(final Page page, TypedFile file) {
-        mApi.postPhoto(page.type, page.id, MySharedPreferences.readToPreferences(this, getString(R.string.token_string), ""), file, new Callback<String>() {
+    private void postPhoto(final int pos, TypedFile file) {
+        mApi.postPhoto(pages.get(pos).type, pages.get(pos).id, MySharedPreferences.readToPreferences(this, getString(R.string.token_string), ""), file, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                page.photos.add(s);
+                pages.get(pos).photos.add(s);
                 mPagerAdapter.setPages(pages);
             }
 
@@ -390,7 +388,7 @@ public class BrowsePhotosActivity extends BaseActivity implements ObservableScro
     }
 
     private Fragment getCurrentFragment() {
-        return mPagerAdapter.getItemAt(mPager.getCurrentItem());
+        return mPagerAdapter.getItem(mPager.getCurrentItem());
     }
 
     private boolean toolbarIsShown() {
@@ -434,7 +432,7 @@ public class BrowsePhotosActivity extends BaseActivity implements ObservableScro
 
     }
 
-    private static class NavigationAdapter extends CacheFragmentStatePagerAdapter {
+    private static class NavigationAdapter extends FragmentStatePagerAdapter {
 
         private List<Page> pages;
 
@@ -449,11 +447,6 @@ public class BrowsePhotosActivity extends BaseActivity implements ObservableScro
         }
 
         @Override
-        protected Fragment createItem(int i) {
-            return PhotosGridFragment.newInstance(pages.get(i).photos);
-        }
-
-        @Override
         public int getCount() {
             return pages.size();
         }
@@ -461,6 +454,11 @@ public class BrowsePhotosActivity extends BaseActivity implements ObservableScro
         @Override
         public CharSequence getPageTitle(int position) {
             return pages.get(position).name;
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return PhotosGridFragment.newInstance(pages.get(i).photos);
         }
     }
 
