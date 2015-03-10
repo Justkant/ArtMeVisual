@@ -1,5 +1,5 @@
 <resources>
-    <string name="base_url">http://192.168.0.109/artme-api</string>
+    <string name="base_url">http://artme.ddns.net/artme-api</string>
     <string name="app_name">ArtMeVisual</string>
     <string name="title_activity_explore">ArtMe</string>
     <string name="grid_image_desc">Grid Image</string>

@@ -64,6 +64,16 @@
                 app:floatingLabel="highlight"
                 app:singleLineEllipsis="true" />
 
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/create_event_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/create_event_desc"
+                android:inputType="textMultiLine"
+                android:textSize="16sp"
+                app:floatingLabel="highlight"
+                app:maxCharacters="150" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,16 +146,6 @@
                     android:textSize="16sp" />
 
             </LinearLayout>
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/create_event_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/create_event_desc"
-                android:inputType="textMultiLine"
-                android:textSize="16sp"
-                app:floatingLabel="highlight"
-                app:maxCharacters="150" />
 
         </LinearLayout>
     </ScrollView>
