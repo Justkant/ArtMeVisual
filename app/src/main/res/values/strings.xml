@@ -76,4 +76,5 @@
     <string name="edit_group_adress">Group adress</string>
     <string name="edit_group_description">Group description</string>
     <string name="edit_group">Edit group</string>
+    <string name="edit_profil_description">Profil description</string>
 </resources>

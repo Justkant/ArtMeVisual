@@ -37,6 +37,7 @@ public class EditProfileActivity extends BaseActivity implements View.OnClickLis
     private Context mContext;
     private MaterialEditText mEditFirstname;
     private MaterialEditText mEditLastname;
+    private MaterialEditText mEditDescription;
     private MaterialEditText mEditPassword;
     private ImageView user_pic;
 
@@ -63,6 +64,7 @@ public class EditProfileActivity extends BaseActivity implements View.OnClickLis
         mEditFirstname = (MaterialEditText) findViewById(R.id.firstnameText);
         mEditLastname = (MaterialEditText) findViewById(R.id.lastnameText);
         mEditPassword = (MaterialEditText) findViewById(R.id.edit_passwordText);
+        mEditDescription = (MaterialEditText) findViewById(R.id.descriptionText);
         user_pic = (ImageView) findViewById(R.id.profil_img);
         user_pic.setOnClickListener(this);
 
@@ -83,7 +85,7 @@ public class EditProfileActivity extends BaseActivity implements View.OnClickLis
                     setSupportActionBar(mToolbar);
                     mEditFirstname.setHint(user.first_name);
                     mEditLastname.setHint(user.last_name);
-
+                    mEditDescription.setHint(user.description);
                 }
             }
 
@@ -127,6 +129,9 @@ public class EditProfileActivity extends BaseActivity implements View.OnClickLis
         }
         if (picture_url != null) {
             user.picture_url = picture_url;
+        }
+        if (!mEditDescription.getText().toString().isEmpty()) {
+            user.description = mEditDescription.getText().toString();
         }
         mCacheManager.putAsync("me", user, new PutCallback() {
             @Override
