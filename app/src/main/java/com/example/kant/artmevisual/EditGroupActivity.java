@@ -1,21 +1,16 @@
 package com.example.kant.artmevisual;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.kant.artmevisual.ArtmeAPI.ApiReturn;
 import com.example.kant.artmevisual.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artmevisual.ArtmeAPI.Group;
-import com.example.kant.artmevisual.ArtmeAPI.User;
-import com.iainconnor.objectcache.PutCallback;
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.SnackbarManager;
 import com.nispok.snackbar.enums.SnackbarType;
@@ -35,7 +30,7 @@ public class EditGroupActivity extends BaseActivity implements View.OnClickListe
     private Toolbar mToolbar;
     private MaterialEditText mEditName;
     private MaterialEditText mEditDescription;
-    private MaterialEditText mEditaAdress;
+    private MaterialEditText mEditAdress;
     private ImageView user_pic;
     private Group group;
     private ArtmeAPI mApi;
@@ -56,7 +51,7 @@ public class EditGroupActivity extends BaseActivity implements View.OnClickListe
 
         mEditName = (MaterialEditText) findViewById(R.id.groupName);
         mEditDescription = (MaterialEditText) findViewById(R.id.groupDescription);
-        mEditaAdress = (MaterialEditText) findViewById(R.id.group_adress);
+        mEditAdress = (MaterialEditText) findViewById(R.id.group_adress);
         user_pic = (ImageView) findViewById(R.id.group_img);
         user_pic.setOnClickListener(this);
 
@@ -71,6 +66,9 @@ public class EditGroupActivity extends BaseActivity implements View.OnClickListe
                     @Override
                     public void success(Group gp, Response response) {
                         group = gp;
+                        mEditName.setText(gp.title);
+                        mEditDescription.setText(gp.description);
+                        mEditAdress.setText(gp.address);
                         mToolbar.setTitle(group.title);
                         setSupportActionBar(mToolbar);
                     }
@@ -87,6 +85,9 @@ public class EditGroupActivity extends BaseActivity implements View.OnClickListe
         }
         if (!mEditDescription.getText().toString().isEmpty()) {
             group.description = mEditDescription.getText().toString();
+        }
+        if (!mEditAdress.getText().toString().isEmpty()) {
+            group.address = mEditAdress.getText().toString();
         }
         if (picture_url != null) {
             group.picture_url = picture_url;

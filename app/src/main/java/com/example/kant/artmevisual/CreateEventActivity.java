@@ -246,7 +246,7 @@ public class CreateEventActivity extends BaseActivity implements AdapterView.OnI
             event.title = mEventName.getText().toString();
             String address = mEventPlace.getText().toString();
             if (!address.isEmpty())
-                event.adress = address;
+                event.address = address;
             event.start_date = startDate + " " + startTime;
             event.end_date = endDate + " " + endTime;
             String desc = mEventDesc.getText().toString();

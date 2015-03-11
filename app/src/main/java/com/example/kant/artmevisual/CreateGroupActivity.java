@@ -137,7 +137,7 @@ public class CreateGroupActivity extends BaseActivity {
             group.title = mGroupName.getText().toString();
             String address = mGroupPlace.getText().toString();
             if (!address.isEmpty())
-                group.adress = address;
+                group.address = address;
             String desc = mGroupDesc.getText().toString();
             if (!desc.isEmpty())
                 group.description = desc;

@@ -131,7 +131,7 @@ public class GroupActivity extends BaseActivity {
                                 .into(mGroupImg);
                         mToolbar.setTitle(group.title);
                         setSupportActionBar(mToolbar);
-                        mPlace.setText(group.adress);
+                        mPlace.setText(group.address);
                         mDesc.setText(group.description);
                         insertUsers(group.users);
                         insertEvents(group.past_events, group.next_events);

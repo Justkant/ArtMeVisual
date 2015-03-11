@@ -16,7 +16,7 @@ public class Group implements Serializable {
     public String description;
     public String picture_url;
     public String creation_date;
-    public String adress;
+    public String address;
     public List<User> users = new ArrayList<>();
     public List<Event> next_events = new ArrayList<>();
     public List<Event> past_events = new ArrayList<>();

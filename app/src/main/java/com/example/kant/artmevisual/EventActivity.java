@@ -162,7 +162,7 @@ public class EventActivity extends BaseActivity {
                                 .into(mEventImg);
                         mToolbar.setTitle(event.title);
                         setSupportActionBar(mToolbar);
-                        mPlace.setText(event.adress);
+                        mPlace.setText(event.address);
                         mDesc.setText(event.description);
                         insertUsers(event.users);
                         insertPhotos(event.photos);

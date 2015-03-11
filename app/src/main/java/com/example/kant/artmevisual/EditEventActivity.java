@@ -160,11 +160,11 @@ public class EditEventActivity extends BaseActivity implements DatePickerDialog.
                         setSupportActionBar(mToolbar);
 
                         if (event.title != null)
-                            mEditName.setHint(event.title);
-                        if (event.adress != null)
-                            mEditPlace.setHint(event.adress);
+                            mEditName.setText(event.title);
+                        if (event.address != null)
+                            mEditPlace.setText(event.address);
                         if (event.description != null)
-                            mEditDesc.setHint(event.description);
+                            mEditDesc.setText(event.description);
                         try {
                             mStartDate.setText(DateFormat.getDateInstance().format(dateFormat.parse(event.start_date)));
                             mStartTime.setText(DateFormat.getTimeInstance().format(timeFormat.parse(event.start_date.substring(event.start_date.indexOf(" ") + 1))));
@@ -210,7 +210,7 @@ public class EditEventActivity extends BaseActivity implements DatePickerDialog.
             event.title = mEditName.getText().toString();
         }
         if (!mEditPlace.getText().toString().isEmpty()) {
-            event.adress = mEditPlace.getText().toString();
+            event.address = mEditPlace.getText().toString();
         }
         if (!mEditDesc.getText().toString().isEmpty()) {
             event.description = mEditDesc.getText().toString();

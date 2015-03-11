@@ -178,6 +178,7 @@ public abstract class BaseActivity extends ActionBarActivity implements SwipeRef
 
                 @Override
                 public void failure(RetrofitError error) {
+                    Log.i("show error", error.getMessage());
                     SnackbarManager.show(
                             Snackbar.with(context)
                                     .type(SnackbarType.MULTI_LINE)

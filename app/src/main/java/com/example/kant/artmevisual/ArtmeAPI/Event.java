@@ -13,7 +13,7 @@ public class Event implements Serializable {
     public String description;
     public String start_date;
     public String end_date;
-    public String adress;
+    public String address;
     public String picture_url;
     public List<User> users = new ArrayList<>();
     public List<String> photos = new ArrayList<>();
