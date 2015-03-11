@@ -22,6 +22,7 @@ import com.iainconnor.objectcache.CacheManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -51,6 +52,7 @@ public class EventActivity extends BaseActivity {
     private int EVENT_EDIT_CODE = 10;
 
     private FloatingActionButton mSubFab;
+    private FloatingActionButton mUnSubFab;
 
 
     @Override
@@ -115,6 +117,26 @@ public class EventActivity extends BaseActivity {
                         });
             }
         });
+
+        mUnSubFab = (FloatingActionButton) findViewById(R.id.unsub_btn);
+        mSubFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mApi.unsubEvent(event_id,
+                        MySharedPreferences.readToPreferences(mContext, getString(R.string.token_string), ""),
+                        new Callback<Object>() {
+                            @Override
+                            public void success(Object o, Response response) {
+                                updateInfosEvent();
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                            }
+                        });
+            }
+        });
     }
 
     public void updateInfosEvent() {
@@ -125,8 +147,14 @@ public class EventActivity extends BaseActivity {
                     public void success(Event event, Response response) {
                         if (event.can_edit)
                             mFab.setVisibility(View.VISIBLE);
-                        if (event.is_sub)
+                        if (event.is_sub) {
                             mSubFab.setVisibility(View.GONE);
+                            mUnSubFab.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            mUnSubFab.setVisibility(View.GONE);
+                            mSubFab.setVisibility(View.VISIBLE);
+                        }
                         Picasso.with(mContext)
                                 .load(getString(R.string.base_url) + "/" + event.picture_url)
                                 .centerCrop()

@@ -1,5 +1,7 @@
 package com.example.kant.artmevisual.ArtmeAPI;
 
+import com.squareup.okhttp.Call;
+
 import java.util.List;
 
 import retrofit.Callback;
@@ -52,6 +54,9 @@ public interface ArtmeAPI {
 
     @POST("/events/{id}/user")
     void subEvent(@Path("id") int id, @Header("TOKEN") String token, Callback<Event> cb);
+
+    @DELETE("/events/{id}/user")
+    void unsubEvent(@Path("id") int id, @Header("TOKEN") String token, Callback<Object> cb);
 
     @POST("/groups/{id}/event")
     void groupPostEvent(@Path("id") int id, @Header("TOKEN") String token, @Body Event event, Callback<Event> cb);

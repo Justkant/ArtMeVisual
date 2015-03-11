@@ -161,6 +161,18 @@
                 android:layout_gravity="left"
                 android:layout_marginLeft="16dp" />
 
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/unsub_btn"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="165dp"
+                fab:fab_colorNormal="@color/accent"
+                fab:fab_colorPressed="@color/accent_dark"
+                fab:fab_icon="@drawable/ic_close_white_24dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="16dp" />
+
         </FrameLayout>
     </ScrollView>
 </LinearLayout>
