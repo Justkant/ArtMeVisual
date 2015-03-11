@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kant.artmevisual.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artmevisual.ArtmeAPI.Event;
@@ -123,11 +124,20 @@ public class EventActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == EVENT_EDIT_CODE) {
             if (resultCode == RESULT_OK) {
+
+                boolean deleted = false;
+                if (data != null) {
+                    deleted = data.getBooleanExtra("delete", false);
+                }
+                if (deleted == true)
+                    finish();
                 updateInfosEvent();
             }
         }
+
     }
 
     private void insertPhotos(List<String> photos) {

@@ -41,6 +41,9 @@ public interface ArtmeAPI {
     @DELETE("/users/{id}")
     void deleteUser(@Path("id") int id, @Header("TOKEN") String token, Callback<String> cb);
 
+    @DELETE("/events/{id}")
+    void deleteEvent(@Path("id") int id, @Header("TOKEN") String token, Callback<String> cb);
+
     @POST("/users/{id}/event")
     void userPostEvent(@Path("id") int id, @Header("TOKEN") String token, @Body Event event, Callback<Event> cb);
 

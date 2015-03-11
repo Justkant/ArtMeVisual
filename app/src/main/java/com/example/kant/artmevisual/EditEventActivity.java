@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,9 @@ import com.example.kant.artmevisual.ArtmeAPI.Event;
 import com.example.kant.artmevisual.ArtmeAPI.User;
 import com.iainconnor.objectcache.CacheManager;
 import com.iainconnor.objectcache.PutCallback;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
+import com.nispok.snackbar.enums.SnackbarType;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
@@ -58,6 +62,7 @@ public class EditEventActivity extends BaseActivity implements DatePickerDialog.
     private String picture_url;
     public Event event;
     private ArtmeAPI mApi;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +73,7 @@ public class EditEventActivity extends BaseActivity implements DatePickerDialog.
         if (event_id == 0) {
             finish();
         }
-
-        Toolbar toolbar = getActionBarToolbar();
-        if (toolbar != null) {
-            toolbar.setTitle("Nouvel évènement");
-            setSupportActionBar(toolbar);
-        }
+        mToolbar = getActionBarToolbar();
 
         mEditImg = (ImageView) findViewById(R.id.event_img);
         mEditImg.setOnClickListener(new View.OnClickListener() {
@@ -98,15 +98,11 @@ public class EditEventActivity extends BaseActivity implements DatePickerDialog.
         final Calendar calendar = Calendar.getInstance();
 
         calendar.add(Calendar.HOUR, 1);
-        startDate = dateFormat.format(calendar.getTime());
-        startTime = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
         mStartDate.setText(DateFormat.getDateInstance().format(calendar.getTime()));
         mStartTime.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()));
         calendar.add(Calendar.HOUR, 1);
         mEndDate.setText(DateFormat.getDateInstance().format(calendar.getTime()));
         mEndTime.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()));
-        endDate = dateFormat.format(calendar.getTime());
-        endTime = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
 
         mStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +155,10 @@ public class EditEventActivity extends BaseActivity implements DatePickerDialog.
                     @Override
                     public void success(Event ev, Response response) {
                         event = ev;
+
+                        mToolbar.setTitle(event.title);
+                        setSupportActionBar(mToolbar);
+
                         if (event.title != null)
                             mEditName.setHint(event.title);
                         if (event.adress != null)
@@ -170,10 +170,10 @@ public class EditEventActivity extends BaseActivity implements DatePickerDialog.
                             mStartTime.setText(DateFormat.getTimeInstance().format(timeFormat.parse(event.start_date.substring(event.start_date.indexOf(" ") + 1))));
                             mEndDate.setText(DateFormat.getDateInstance().format(dateFormat.parse(event.end_date)));
                             mEndTime.setText(DateFormat.getTimeInstance().format(timeFormat.parse(event.end_date.substring(event.end_date.indexOf(" ") + 1))));
-                            startDate = mStartDate.getText().toString();
-                            startTime = mStartTime.getText().toString();
-                            endDate = mEndDate.getText().toString();
-                            endTime = mEndTime.getText().toString();
+                            startDate = event.start_date.substring(0, event.start_date.indexOf(" "));
+                            startTime = event.start_date.substring(event.start_date.indexOf(" "), event.start_date.length());
+                            endDate = event.end_date.substring(0, event.end_date.indexOf(" "));
+                            endTime = event.end_date.substring(event.end_date.indexOf(" "), event.end_date.length());
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -218,6 +218,7 @@ public class EditEventActivity extends BaseActivity implements DatePickerDialog.
         if (picture_url != null) {
             event.picture_url = picture_url;
         }
+
         event.start_date = startDate + " " + startTime;
         event.end_date = endDate + " " + endTime;
         String token = MySharedPreferences.readToPreferences(getBaseContext(), getString(R.string.token_string), "");
@@ -243,8 +244,26 @@ public class EditEventActivity extends BaseActivity implements DatePickerDialog.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
-            onBackPressed();
+        if (id == R.id.action_delete) {
+            mApi.deleteEvent(event.id, MySharedPreferences.readToPreferences(mActivity, getString(R.string.token_string), ""), new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                   // MySharedPreferences.clearPreferences(mActivity);
+                    Intent intent = getIntent();
+                    intent.putExtra("delete", true);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    SnackbarManager.show(
+                            Snackbar.with(mActivity)
+                                    .type(SnackbarType.MULTI_LINE)
+                                    .text("Un problème est survenu")
+                    );
+                }
+            });
             return true;
         }
         return super.onOptionsItemSelected(item);

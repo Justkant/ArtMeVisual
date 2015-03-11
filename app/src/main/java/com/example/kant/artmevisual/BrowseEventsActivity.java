@@ -152,4 +152,10 @@ public class BrowseEventsActivity extends ToolbarControlBaseActivity<ObservableG
         }
         mSwipeRefreshLayout.setEnabled(enable);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getEvents();
+    }
 }
