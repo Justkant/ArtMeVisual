@@ -120,6 +120,7 @@ public class GroupActivity extends BaseActivity {
     }
 
     private void insertPhotos(List<String> photos) {
+        mGroupPhotos.removeAllViews();
         FrameLayout view;
         for (String photo : photos) {
             view = (FrameLayout) mInflater.inflate(R.layout.horizontal_item, mGroupPhotos, false);
@@ -134,6 +135,7 @@ public class GroupActivity extends BaseActivity {
     }
 
     private void insertEvents(List<Event> past_events, List<Event> next_events) {
+        mGroupEvents.removeAllViews();
         View view;
         for (final Event event : past_events) {
             view = mInflater.inflate(R.layout.horizontal_item, mGroupEvents, false);
@@ -176,6 +178,7 @@ public class GroupActivity extends BaseActivity {
     }
 
     private void insertUsers(List<User> users) {
+        mGroupUsers.removeAllViews();
         View view;
         for (final User user : users) {
             view = mInflater.inflate(R.layout.horizontal_item, mGroupUsers, false);

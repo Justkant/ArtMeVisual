@@ -1,2 +1,13 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.kant.artmevisual.MyEventsActivity"/>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context="com.example.kant.artmevisual.MyEventsActivity">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/next_events"
+            android:title="@string/next_events_menu_string"
+            android:checked="true" />
+        <item android:id="@+id/past_events"
+            android:title="@string/past_events_menu_string" />
+        <item android:id="@+id/sub_events"
+            android:title="@string/sub_events_menu_string" />
+    </group>
+    </menu>

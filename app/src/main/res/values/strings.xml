@@ -68,4 +68,7 @@
     <string name="title_activity_edit_event">EditEventActivity</string>
     <string name="title_activity_edit_group">EditGroupActivity</string>
     <string name="edit_profil">Edit Profil</string>
+    <string name="next_events_menu_string">Even. à venir</string>
+    <string name="past_events_menu_string">Even. passés</string>
+    <string name="sub_events_menu_string">Even. inscrit</string>
 </resources>

@@ -131,6 +131,7 @@ public class EventActivity extends BaseActivity {
     }
 
     private void insertPhotos(List<String> photos) {
+        mEventPhotos.removeAllViews();
         FrameLayout view;
         for (String photo : photos) {
             view = (FrameLayout) mInflater.inflate(R.layout.horizontal_item, mEventPhotos, false);
@@ -145,6 +146,7 @@ public class EventActivity extends BaseActivity {
     }
 
     private void insertUsers(List<User> users) {
+        mEventUsers.removeAllViews();
         View view;
         for (final User user : users) {
             view = mInflater.inflate(R.layout.horizontal_item, mEventUsers, false);

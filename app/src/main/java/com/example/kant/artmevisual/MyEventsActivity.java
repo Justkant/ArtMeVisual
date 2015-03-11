@@ -34,6 +34,7 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
     private List<Event> events = new ArrayList<>();
     private ArtmeAPI mApi;
     private Context mContext;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,8 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
         mApi.userMe(MySharedPreferences.readToPreferences(this, getString(R.string.token_string), ""), new Callback<User>() {
 
             @Override
-            public void success(User user, Response response) {
+            public void success(User me, Response response) {
+                user = me;
                 events.clear();
                 events.addAll(user.next_events);
                 mEventsCardAdapter.setEventList(events);
@@ -106,6 +108,23 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        item.setChecked(true);
+        if (id == R.id.next_events) {
+            events.clear();
+            events.addAll(user.next_events);
+            mEventsCardAdapter.notifyDataSetChanged();
+        }
+        else if (id == R.id.past_events) {
+            events.clear();
+            events.addAll(user.past_events);
+            mEventsCardAdapter.notifyDataSetChanged();
+        }
+        else if (id == R.id.sub_events) {
+            events.clear();
+            events.addAll(user.sub_events);
+            mEventsCardAdapter.notifyDataSetChanged();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
