@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +50,8 @@ public class EventActivity extends BaseActivity {
     private LinearLayout mEventPhotos;
     private int EVENT_EDIT_CODE = 10;
 
+    private FloatingActionButton mSubFab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,27 @@ public class EventActivity extends BaseActivity {
                 .build();
         mApi = restAdapter.create(ArtmeAPI.class);
         updateInfosEvent();
+
+        mSubFab = (FloatingActionButton) findViewById(R.id.sub_btn);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mApi.subEvent(event_id,
+                        MySharedPreferences.readToPreferences(mContext, getString(R.string.token_string), ""),
+                        new Callback<Event>() {
+                            @Override
+                            public void success(Event event, Response response) {
+                                mSubFab.setColorNormal(R.color.accent);
+                                mSubFab.setColorPressed(R.color.accent_dark);
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                            }
+                        });
+            }
+        });
     }
 
     public void updateInfosEvent() {
@@ -117,7 +141,7 @@ public class EventActivity extends BaseActivity {
 
                     @Override
                     public void failure(RetrofitError error) {
-
+                        finish();
                     }
                 });
     }

@@ -321,7 +321,6 @@ public abstract class BaseActivity extends ActionBarActivity implements SwipeRef
                 mGroupItemsListContainer = new LinearLayout(this);
                 mGroupItemsListContainer.setOrientation(LinearLayout.VERTICAL);
                 for (final Group group : groups) {
-                    Log.d("BaseActivity", group.title);
                     View view = getLayoutInflater().inflate(R.layout.navdrawer_item, mGroupItemsListContainer, false);
                     ImageView iconView = (ImageView) view.findViewById(R.id.icon);
                     TextView titleView = (TextView) view.findViewById(R.id.title);
