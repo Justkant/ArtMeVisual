@@ -2,10 +2,8 @@ package com.example.kant.artmevisual;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -23,7 +21,6 @@ import com.example.kant.artmevisual.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artmevisual.ArtmeAPI.Event;
 import com.example.kant.artmevisual.ArtmeAPI.Group;
 import com.example.kant.artmevisual.ArtmeAPI.User;
-import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;

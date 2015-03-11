@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 
 import com.example.kant.artmevisual.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artmevisual.ArtmeAPI.Event;
+import com.example.kant.artmevisual.ArtmeAPI.User;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.SnackbarManager;
@@ -62,12 +63,12 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
     }
 
     private void getEvents() {
-        mApi.getEvents(new Callback<List<Event>>() {
+        mApi.userMe(MySharedPreferences.readToPreferences(this, getString(R.string.token_string), ""), new Callback<User>() {
 
             @Override
-            public void success(List<Event> allEvents, Response response) {
+            public void success(User user, Response response) {
                 events.clear();
-                events.addAll(allEvents);
+                events.addAll(user.next_events);
                 mEventsCardAdapter.setEventList(events);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
