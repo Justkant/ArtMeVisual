@@ -97,7 +97,7 @@ public class EventActivity extends BaseActivity {
         updateInfosEvent();
 
         mSubFab = (FloatingActionButton) findViewById(R.id.sub_btn);
-        mFab.setOnClickListener(new View.OnClickListener() {
+        mSubFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mApi.subEvent(event_id,
@@ -105,8 +105,7 @@ public class EventActivity extends BaseActivity {
                         new Callback<Event>() {
                             @Override
                             public void success(Event event, Response response) {
-                                mSubFab.setColorNormal(R.color.accent);
-                                mSubFab.setColorPressed(R.color.accent_dark);
+                                updateInfosEvent();
                             }
 
                             @Override
@@ -126,6 +125,8 @@ public class EventActivity extends BaseActivity {
                     public void success(Event event, Response response) {
                         if (event.can_edit)
                             mFab.setVisibility(View.VISIBLE);
+                        if (event.is_sub)
+                            mSubFab.setVisibility(View.GONE);
                         Picasso.with(mContext)
                                 .load(getString(R.string.base_url) + "/" + event.picture_url)
                                 .centerCrop()

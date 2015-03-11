@@ -35,6 +35,7 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
     private ArtmeAPI mApi;
     private Context mContext;
     private User user;
+    private int eventToShow = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,12 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
             public void success(User me, Response response) {
                 user = me;
                 events.clear();
-                events.addAll(user.next_events);
+                if (eventToShow == 0)
+                    events.addAll(user.next_events);
+                else if (eventToShow == 1)
+                    events.addAll(user.past_events);
+                else if (eventToShow == 2)
+                    events.addAll(user.sub_events);
                 mEventsCardAdapter.setEventList(events);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -110,21 +116,17 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
         int id = item.getItemId();
         item.setChecked(true);
         if (id == R.id.next_events) {
-            events.clear();
-            events.addAll(user.next_events);
-            mEventsCardAdapter.notifyDataSetChanged();
+            eventToShow = 0;
+            getEvents();
         }
         else if (id == R.id.past_events) {
-            events.clear();
-            events.addAll(user.past_events);
-            mEventsCardAdapter.notifyDataSetChanged();
+            eventToShow = 1;
+            getEvents();
         }
         else if (id == R.id.sub_events) {
-            events.clear();
-            events.addAll(user.sub_events);
-            mEventsCardAdapter.notifyDataSetChanged();
+            eventToShow = 2;
+            getEvents();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
