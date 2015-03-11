@@ -39,12 +39,13 @@ public class EditGroupActivity extends BaseActivity implements View.OnClickListe
     private Group group;
     private ArtmeAPI mApi;
     private String picture_url;
+    private EditGroupActivity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
-
+        mActivity = this;
         group_id = getIntent().getIntExtra("group_id", 0);
         if (group_id == 0) {
             finish();
