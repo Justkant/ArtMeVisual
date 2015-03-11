@@ -1,10 +1,13 @@
 package com.example.kant.artmevisual;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.kant.artmevisual.ArtmeAPI.ApiReturn;
 import com.example.kant.artmevisual.ArtmeAPI.ArtmeAPI;
@@ -14,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.iainconnor.objectcache.CacheManager;
 import com.iainconnor.objectcache.GetCallback;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 
@@ -25,6 +29,7 @@ import retrofit.client.Response;
 
 public class CreateGroupActivity extends BaseActivity {
 
+    private static final int RESULT_CODE = 100;
     private Context mContext;
 
     private ArtmeAPI mApi;
@@ -36,6 +41,8 @@ public class CreateGroupActivity extends BaseActivity {
     private int user_id;
 
     private boolean intoValidate = false;
+    private String picture_url;
+    private ImageView mEventImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,14 @@ public class CreateGroupActivity extends BaseActivity {
             toolbar.setTitle("Nouveau groupe");
             setSupportActionBar(toolbar);
         }
+
+        mEventImg = (ImageView) findViewById(R.id.event_img);
+        mEventImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startBrowsePhotos();
+            }
+        });
 
         CacheManager mCacheManager = CacheManager.getInstance(((MyApplication) getApplicationContext()).getDiskCache());
         Type userType = new TypeToken<User>() {
@@ -78,6 +93,24 @@ public class CreateGroupActivity extends BaseActivity {
 
     }
 
+    private void startBrowsePhotos() {
+        Intent intent = new Intent(this, BrowsePhotosActivity.class);
+        intent.putExtra("me", true);
+        startActivityForResult(intent, RESULT_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_CODE && resultCode == RESULT_OK && data != null) {
+            picture_url = data.getStringExtra("picture_url");
+            Picasso.with(mContext)
+                    .load(getString(R.string.base_url) + "/" + picture_url)
+                    .centerCrop()
+                    .fit()
+                    .into(mEventImg);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,6 +132,8 @@ public class CreateGroupActivity extends BaseActivity {
                 return true;
             }
             Group group = new Group();
+            if (picture_url != null && !picture_url.isEmpty())
+                group.picture_url = picture_url;
             group.title = mGroupName.getText().toString();
             String address = mGroupPlace.getText().toString();
             if (!address.isEmpty())

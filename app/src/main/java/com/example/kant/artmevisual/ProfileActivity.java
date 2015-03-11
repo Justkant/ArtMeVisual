@@ -123,6 +123,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void insertPhotos(List<String> photos) {
+        mUserPhotos.removeAllViews();
         FrameLayout view;
         for (String photo : photos) {
             view = (FrameLayout) mInflater.inflate(R.layout.horizontal_item, mUserPhotos, false);
@@ -137,6 +138,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void insertSubEvents(List<Event> sub_events) {
+        mUserSubEvents.removeAllViews();
         View view;
         for (final Event event : sub_events) {
             view = mInflater.inflate(R.layout.horizontal_item, mUserSubEvents, false);
@@ -160,6 +162,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void insertEvents(List<Event> past_events, List<Event> next_events) {
+        mUserEvents.removeAllViews();
         View view;
         for (final Event event : past_events) {
             view = mInflater.inflate(R.layout.horizontal_item, mUserEvents, false);
@@ -202,6 +205,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void insertGroups(List<Group> groups) {
+        mUserGroups.removeAllViews();
         View view;
         for (final Group group : groups) {
             view = mInflater.inflate(R.layout.horizontal_item, mUserGroups, false);
