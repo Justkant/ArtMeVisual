@@ -6,17 +6,24 @@
     android:layout_below="@+id/actionBarToolbar"
     android:fitsSystemWindows="true"
     tools:context="com.example.kant.artmevisual.SearchActivity">
+
     <FrameLayout
         android:id="@+id/main_content"
-        android:clipChildren="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false">
 
-        <com.github.ksoichiro.android.observablescrollview.ObservableListView
-            android:id="@+id/card_list"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize" />
+            android:layout_marginTop="?attr/actionBarSize">
+
+            <com.github.ksoichiro.android.observablescrollview.ObservableListView
+                android:id="@+id/card_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <include layout="@layout/toolbar_actionbar" />
 

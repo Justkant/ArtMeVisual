@@ -1,22 +1,45 @@
 package com.example.kant.artmevisual;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 
+import com.example.kant.artmevisual.ArtmeAPI.ArtmeAPI;
+import com.example.kant.artmevisual.ArtmeAPI.Event;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
+import com.nispok.snackbar.enums.SnackbarType;
+import com.nispok.snackbar.listeners.ActionClickListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
-public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListView> {
+public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListView> implements AdapterView.OnItemClickListener {
 
     private ObservableListView mCardList;
+    private CardListViewAdapter mEventsCardAdapter;
+    private List<Event> events = new ArrayList<>();
+    private ArtmeAPI mApi;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_events);
+
+        mContext = this;
 
         Toolbar toolbar = getActionBarToolbar();
         if (toolbar != null) {
@@ -25,6 +48,47 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
         }
 
         overridePendingTransition(0, 0);
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(getString(R.string.base_url))
+                .build();
+        mApi = restAdapter.create(ArtmeAPI.class);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        getEvents();
+    }
+
+    private void getEvents() {
+        mApi.getEvents(new Callback<List<Event>>() {
+
+            @Override
+            public void success(List<Event> allEvents, Response response) {
+                events.clear();
+                events.addAll(allEvents);
+                mEventsCardAdapter.setEventList(events);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                SnackbarManager.show(
+                        Snackbar.with(mContext)
+                                .type(SnackbarType.MULTI_LINE)
+                                .text("Impossible de récupérer les évènements")
+                                .actionLabel("Réessayer")
+                                .actionListener(new ActionClickListener() {
+                                    @Override
+                                    public void onActionClicked(Snackbar snackbar) {
+                                        getEvents();
+                                    }
+                                })
+                );
+            }
+        });
     }
 
     @Override
@@ -41,10 +105,6 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -56,12 +116,38 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
     @Override
     protected ObservableListView createScrollable() {
         mCardList = (ObservableListView) findViewById(R.id.card_list);
-        //mSearchList.setAdapter(new ListViewAdapter(this, getData()));
+        mEventsCardAdapter = new CardListViewAdapter(this, events);
+        mCardList.setAdapter(mEventsCardAdapter);
+        mCardList.setOnItemClickListener(this);
         return mCardList;
     }
 
     @Override
-    public void onRefresh() {
-
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (events.isEmpty() || events.get(position) == null)
+            return;
+        Intent intent = new Intent(this, EventActivity.class);
+        intent.putExtra("event_id", events.get(position).id);
+        startActivity(intent);
     }
+
+    @Override
+    public void onRefresh() {
+        getEvents();
+    }
+
+    @Override
+    public void onScrollChanged(int i, boolean b, boolean b2) {
+        boolean enable = false;
+        if (mCardList != null && mCardList.getChildCount() > 0) {
+            // check if the first item of the list is visible
+            boolean firstItemVisible = mCardList.getFirstVisiblePosition() == 0;
+            // check if the top of the first item is visible
+            boolean topOfFirstItemVisible = mCardList.getChildAt(0).getTop() == 0;
+            // enabling or disabling the refresh layout
+            enable = firstItemVisible && topOfFirstItemVisible;
+        }
+        mSwipeRefreshLayout.setEnabled(enable);
+    }
+
 }
