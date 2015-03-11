@@ -30,6 +30,7 @@ import retrofit.client.Response;
 
 public class GroupActivity extends BaseActivity {
 
+    private static final int GROUP_EDIT_CODE = 10;
     private Context mContext;
     private LayoutInflater mInflater;
     private CacheManager mCacheManager;
@@ -42,6 +43,7 @@ public class GroupActivity extends BaseActivity {
     private FloatingActionButton mFab;
 
     private ImageView mGroupImg;
+    private TextView mGroupName;
     private TextView mPlace;
     private TextView mDesc;
 
@@ -74,13 +76,14 @@ public class GroupActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, EditGroupActivity.class);
                 intent.putExtra("group_id", group_id);
-                startActivity(intent);
+                startActivityForResult(intent, GROUP_EDIT_CODE);
             }
         });
 
         mGroupImg = (ImageView) findViewById(R.id.group_img);
         mPlace = (TextView) findViewById(R.id.group_address);
         mDesc = (TextView) findViewById(R.id.group_desc);
+        mGroupName = (TextView) findViewById(R.id.groupName);
 
         mGroupUsers = (LinearLayout) findViewById(R.id.group_users);
         mGroupEvents = (LinearLayout) findViewById(R.id.group_events);
@@ -91,6 +94,28 @@ public class GroupActivity extends BaseActivity {
                 .build();
         mApi = restAdapter.create(ArtmeAPI.class);
 
+        updateInfosGroup();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GROUP_EDIT_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                boolean deleted = false;
+                if (data != null) {
+                    deleted = data.getBooleanExtra("delete", false);
+                }
+                if (deleted == true)
+                    finish();
+                updateInfosGroup();
+            }
+        }
+
+    }
+
+    private void updateInfosGroup() {
         mApi.getGroupById(group_id,
                 MySharedPreferences.readToPreferences(this, getString(R.string.token_string), ""),
                 new Callback<Group>() {

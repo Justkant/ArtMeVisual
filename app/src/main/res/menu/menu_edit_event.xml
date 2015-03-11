@@ -3,6 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.kant.artmevisual.CreateEventActivity">
     <item android:id="@+id/action_delete" android:title="@string/action_validate"
-        android:icon="@drawable/ic_check_white_24dp"
+        android:icon="@drawable/erase"
         android:orderInCategory="100" app:showAsAction="always" />
 </menu>
