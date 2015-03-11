@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.kant.artmevisual.ArtmeAPI.ApiReturn;
 import com.example.kant.artmevisual.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artmevisual.ArtmeAPI.Group;
 import com.example.kant.artmevisual.ArtmeAPI.User;
@@ -129,10 +130,9 @@ public class EditGroupActivity extends BaseActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_delete) {
-            mApi.deleteGroup(group.id, MySharedPreferences.readToPreferences(mActivity, getString(R.string.token_string), ""), new Callback<String>() {
+            mApi.deleteGroup(group.id, MySharedPreferences.readToPreferences(mActivity, getString(R.string.token_string), ""), new Callback<ApiReturn>() {
                 @Override
-                public void success(String s, Response response) {
-                    // MySharedPreferences.clearPreferences(mActivity);
+                public void success(ApiReturn s, Response response) {
                     Intent intent = getIntent();
                     intent.putExtra("delete", true);
                     setResult(RESULT_OK, intent);

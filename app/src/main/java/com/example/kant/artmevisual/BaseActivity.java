@@ -154,6 +154,7 @@ public abstract class BaseActivity extends ActionBarActivity implements SwipeRef
     protected void onResume() {
         super.onResume();
         checkUserToken();
+        getUserInfo();
     }
 
     protected void getUserInfo() {
