@@ -130,7 +130,7 @@ public class MyEventsActivity extends ToolbarControlBaseActivity<ObservableListV
 
     @Override
     protected View createContainer() {
-        return mCardList;
+        return mSwipeRefreshLayout;
     }
 
     @Override
