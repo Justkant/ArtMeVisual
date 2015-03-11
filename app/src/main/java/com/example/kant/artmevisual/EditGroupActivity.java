@@ -15,6 +15,9 @@ import com.example.kant.artmevisual.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artmevisual.ArtmeAPI.Group;
 import com.example.kant.artmevisual.ArtmeAPI.User;
 import com.iainconnor.objectcache.PutCallback;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
+import com.nispok.snackbar.enums.SnackbarType;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
@@ -117,15 +120,33 @@ public class EditGroupActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_group, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_event, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
-            onBackPressed();
+        if (id == R.id.action_delete) {
+            mApi.deleteGroup(group.id, MySharedPreferences.readToPreferences(mActivity, getString(R.string.token_string), ""), new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    // MySharedPreferences.clearPreferences(mActivity);
+                    Intent intent = getIntent();
+                    intent.putExtra("delete", true);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    SnackbarManager.show(
+                            Snackbar.with(mActivity)
+                                    .type(SnackbarType.MULTI_LINE)
+                                    .text("Un problème est survenu")
+                    );
+                }
+            });
             return true;
         }
         return super.onOptionsItemSelected(item);

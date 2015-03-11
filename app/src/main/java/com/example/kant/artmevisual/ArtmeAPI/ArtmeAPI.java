@@ -68,6 +68,9 @@ public interface ArtmeAPI {
     @PUT("/groups/{id}")
     void putGroup(@Header("TOKEN") String token, @Path("id") int id, @Body Group log, Callback<Group> cb);
 
+   // @DELETE("/groups/{id}")
+    //void putGroup(@Header("TOKEN") String token, @Path("id") int id, @Body Group log, Callback<Group> cb);
+
     @GET("/groups/{id}")
     void getGroupById(@Path("id") int id, @Header("TOKEN") String token, Callback<Group> cb);
 
